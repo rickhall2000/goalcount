@@ -1,7 +1,7 @@
 (ns goalcount.core
   (:require [goalcount.statfile :refer [get-data get-values]]
             [goalcount.calcs :refer [regress]]
-            [incanter.charts :refer [scatter-plot add-lines]]
+            [incanter.charts :refer [scatter-plot add-function]]
             [incanter.core :refer [view]]
             [incanter.stats :refer [linear-model]]
             [clojure.core.matrix :as m]
@@ -28,13 +28,16 @@
   (plot-it points))
 
 
-
-
-
-
-
 (def plot1 (scatter-plot (first goals) (second goals)))
 (def ab (regress (first goals) (second goals) 0.0001 10000000))
-(def plot2 (add-lines plot1 (first goals)
-                      (:fitted (linear-model (second goals) (first goals)))))
-#_(view plot2)
+
+(defn plot-fn [x]
+  (+ (* (second ab) x) (first ab)))
+
+(def plot2 (add-function plot1 plot-fn 0 100))
+(view plot2)
+
+(comment
+  (doto (function-plot sin (- Math/PI) Math/PI)
+    (add-function cos (- Math/PI) Math/PI)
+    view))
