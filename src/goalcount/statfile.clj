@@ -1,6 +1,7 @@
 (ns goalcount.statfile
   (:require [net.cgrand.enlive-html :as html]
-            [clojure.core.matrix :as m]))
+            [clojure.core.matrix :as m]
+            [clatrix.core :as cl]))
 
 (def url-base "http://www.statto.com/football/stats/england/premier-league/")
 (def url-end "/table")
@@ -50,4 +51,4 @@
        (map parse-line)
        (map (apply juxt keys))
        vec
-       (m/matrix :clatrix)))
+       cl/matrix))

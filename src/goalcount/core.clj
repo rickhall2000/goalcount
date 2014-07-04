@@ -4,9 +4,7 @@
             [incanter.charts :refer [scatter-plot add-function]]
             [incanter.core :refer [view]]
             [incanter.stats :refer [linear-model]]
-            [clojure.core.matrix :as m]
-            [clatrix.core :as cl]
-            ))
+            [clatrix.core :as cl]))
 
 (defn get-matrices [x-keys y-key]
   (let [data (get-data)
@@ -25,19 +23,24 @@
 (comment
   (plot-it goals)
   (plot-it played)
-  (plot-it points))
-
+  (plot-it wins))
 
 (def plot1 (scatter-plot (first goals) (second goals)))
-(def ab (regress (first goals) (second goals) 0.0001 10000000))
+(defn reg-epl [[X Y]]
+  (regress X Y 0.0001 1000000))
+(def goal-theta (reg-epl goals))
+#_(def win-theta (reg-epl wins))
+#_(def played-theta (reg-epl played))
+
+(defn find-lm [[X Y]]
+  (:coefs (linear-model Y X)))
+
+(def goal-lm (find-lm goals))
+#_(def win-lm (find-lm wins))
+#_(def played-lm (find-lm played))
 
 (defn plot-fn [x]
-  (+ (* (second ab) x) (first ab)))
+  (+ (* (second goal-theta) x) (first goal-theta)))
 
 (def plot2 (add-function plot1 plot-fn 0 100))
-(view plot2)
-
-(comment
-  (doto (function-plot sin (- Math/PI) Math/PI)
-    (add-function cos (- Math/PI) Math/PI)
-    view))
+#_(view plot2)
