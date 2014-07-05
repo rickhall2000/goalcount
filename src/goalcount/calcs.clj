@@ -1,7 +1,8 @@
 (ns goalcount.calcs
   (:require [clatrix.core :as cl]))
 
-(defn add-ones [x]
+(defn add-ones "Add an X[0] column of all 1's to use with Theta[0]"
+  [x]
   (let [width (first (cl/size x))
         new-row (vec (repeat width 1))
         new-mat (cl/matrix new-row)]
@@ -13,7 +14,7 @@
         (cl/sum)
         (/ (* 2 m)))))
 
-(defn regress [x Y a i]
+(defn linear-regression [x Y a i]
   (let [m (first (cl/size Y))
         X (add-ones x)]
     (loop [Theta (cl/zeros 1 (second (cl/size X))) i i]
