@@ -2,10 +2,10 @@
 
 This is a collection code from a series on machine learning that I am writing on my blog, [onbeyondlambda.blogspot.com](onbeyondlambda.blogspot.com).  
 
-## Usage
-
-linear1.clj is the code from the post 
-[Linear Regression with one variable](http://onbeyondlambda.blogspot.com/2014/07/linear-regression-in-clojure-part-i.html)
+## Posts
+The posts, and the related code files  
+[Introduction](http://onbeyondlambda.blogspot.com/2014/03/ml-class-notes-lesson-1-introduction.html) No code in this post  
+[Linear Regression with one variable](http://onbeyondlambda.blogspot.com/2014/07/linear-regression-in-clojure-part-i.html) linear1.clj  
 
 ## Links
 This is based on what I learned in the [Machine Learning](https://www.coursera.org/course/ml) course on coursera.  
