@@ -19,21 +19,18 @@
     reg-epl
     (print-results "wins->points"))
 
-
 (->> (get-matrices [:win :draw] :pts)
      reg-epl
      (print-results "wins+draws->points"))
 
+(->> (get-matrices [:for] :pts)
+     reg-epl
+     (print-results "for->points"))
 
-(def for-points (get-matrices [:for] :pts))
-(def fa-theta (reg-epl for-points))
-(println "** fa-theta **")
-(println fa-theta)
+(->> (get-matrices [:for :against] :pts)
+     reg-epl
+     (print-results "for-against->pts"))
 
-(def for-against-pts (get-matrices [:for :against] :pts) )
-(def fap-theta (reg-epl goals))
-(println "** fap-theta **")
-(println fap-theta)
 
 (defn fap-fn [{:keys [for against]}]
   (+ (* (second fap-theta) for)
