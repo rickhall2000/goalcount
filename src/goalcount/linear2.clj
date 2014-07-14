@@ -31,18 +31,18 @@
      reg-epl
      (print-results "for-against->pts"))
 
+(->> (get-matrices [:for-h :for-a :against-h :against-a] :pts)
+     reg-epl
+     (print-results "forh-fora-againsth-againsta->pts"))
 
-(defn fap-fn [{:keys [for against]}]
-  (+ (* (second fap-theta) for)
-     (* (last fap-theta) against)
-     (first fap-theta)))
+(->> (get-matrices [:for :against :played :gd :for-h :for-a] :pts)
+     reg-epl
+     (print-results "kitchen sink"))
 
-(def win-draw-loss-points (get-matrices [:win :draw :loss] :pts))
-(def wdlp-theta (reg-epl win-draw-loss-points))
-(println "** wdlp-theta **")
-(println wdlp-theta)
+(->> (get-matrices [:for :against :gd] :pts)
+     reg-epl
+     (print-results "for-against-gd->pts"))
 
-(def for-against-gd-pts (get-matrices [:for :against :gd] :pts))
-(def fagp-theta (reg-epl for-against-gd-pts))
-(println "** fagp-theta **")
-(println fagp-theta)
+(->> (get-matrices [:gd] :pts)
+     reg-epl
+     (print-results "gd->points"))
