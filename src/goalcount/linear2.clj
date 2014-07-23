@@ -37,12 +37,5 @@
 
 (->> (get-matrices [:for :against :played :gd :for-h :for-a] :pts)
      reg-epl
+     (map *)
      (print-results "kitchen sink"))
-
-(->> (get-matrices [:for :against :gd] :pts)
-     reg-epl
-     (print-results "for-against-gd->pts"))
-
-(->> (get-matrices [:gd] :pts)
-     reg-epl
-     (print-results "gd->points"))
