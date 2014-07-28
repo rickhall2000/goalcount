@@ -26,3 +26,28 @@
               adjust-x (cl/* dx (/ a m))]
           (recur (cl/- Theta adjust-x)
                    (dec i)))))))
+
+(defn linear-regression' [x Y a i]
+  (let [m (first (cl/size Y))
+        X (add-ones x)]
+    (loop [Theta (cl/zeros 1 (second (cl/size X))) i i j-squared 0]
+      (if (zero? i)
+        Theta
+        (let [ans (cl/* X (cl/t Theta))
+              diffs (cl/- ans Y)
+              dx (cl/* (cl/t diffs) X)
+              adjust-x (cl/* dx (/ a m))]
+          (recur (cl/- Theta adjust-x)
+                 (dec i)
+                 (mse diffs)))))))
+
+(defn mean-normalization [inputs]
+  (let [avg (/ (reduce + inputs) (count inputs))
+        span (- (apply max inputs) (apply min inputs))]
+    {:avg avg
+     :span span
+     :values
+     (map #(/ (- % avg) span) inputs)}))
+
+(defn denormalize [{:keys [avg span values]}]
+  (map #(+ avg (* % span)) values))
