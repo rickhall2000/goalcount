@@ -27,19 +27,22 @@
           (recur (cl/- Theta adjust-x)
                    (dec i)))))))
 
-(defn linear-regression' [x Y a i]
+(defn linear-regression' [x Y a max-iter]
   (let [m (first (cl/size Y))
-        X (add-ones x)]
-    (loop [Theta (cl/zeros 1 (second (cl/size X))) i i j-squared 0]
-      (if (zero? i)
-        Theta
+        X (add-ones x)
+        low-number 0.01]
+    (loop [Theta (cl/zeros 1 (second (cl/size X))) i 0 j-squared 0 last-error -1]
+      (if (or (< (Math/abs (- j-squared last-error)) low-number)
+           (> i max-iter))
+        {:theta Theta :mean-square-error j-squared :iterations i}
         (let [ans (cl/* X (cl/t Theta))
               diffs (cl/- ans Y)
               dx (cl/* (cl/t diffs) X)
               adjust-x (cl/* dx (/ a m))]
           (recur (cl/- Theta adjust-x)
-                 (dec i)
-                 (mse diffs)))))))
+                 (inc i)
+                 (mse diffs)
+                 j-squared))))))
 
 (defn mean-normalization [inputs]
   (let [avg (/ (reduce + inputs) (count inputs))

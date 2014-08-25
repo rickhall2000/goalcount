@@ -12,6 +12,7 @@ The posts, and the related code files
 This is based on what I learned in the [Machine Learning](https://www.coursera.org/course/ml) course on coursera.  
 Implementing these ideas in Clojure has been helped by the book [Clojure for Machine Learning](http://www.amazon.com/Clojure-Machine-Learning-Akhil-Wali/dp/1783284358/).  
 The code uses [clatrix](https://github.com/tel/clatrix) and [Incanter](http://incanter.org/).
+I have used data from [UCI Machine Learning Repository](http://archive.ics.uci.edu/ml/index.html). I don't know what restrictions are on this data, so I decided not to include it in the repo. I will try to indicate where an additional file is required.  
 
 ## License
 
