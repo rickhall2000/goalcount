@@ -46,7 +46,8 @@
         vals (map :values no-col)
         step-1 (for [i (range rows)]
                  (map #(nth % i) vals))]
-    (cl/matrix step-1)))
+    {:X (cl/matrix step-1)
+     :stats no-col}))
 
 (def Y
   (->> data
