@@ -28,26 +28,26 @@
 (def data
   (map make-record read-file))
 
-(def X'
+(def X-seq
   (->> data
        (map (apply juxt [:overall-height :relative-compactness :orientation
                          :glazing-area-distribution :wall-area :glazing-area
                          :surface-area :roof-area]))
        vec))
 
-(def X (cl/matrix X'))
+(def X (cl/matrix X-seq))
 
 (def normalized-X
-  (let [rows (count X')
-        cols (count (first X'))
-        by-col (for [i (range cols)]
-                 (map #(nth % i) X'))
-        no-col (map c/mean-normalization by-col)
-        vals (map :values no-col)
+  (let [rows (count X-seq)
+        cols (count (first X-seq))
+        by-columns (for [i (range cols)]
+                 (map #(nth % i) X-seq))
+        normalized-columns (map c/mean-normalization by-columns)
+        vals (map :values normalized-columns)
         step-1 (for [i (range rows)]
                  (map #(nth % i) vals))]
     {:X (cl/matrix step-1)
-     :stats no-col}))
+     :stats (map #(dissoc % :values) normalized-columns)}))
 
 (def Y
   (->> data

@@ -38,8 +38,8 @@
         X (add-ones x)
         low-number 0.000001]
     (loop [Theta (cl/zeros 1 (second (cl/size X))) i 0 j-squared 0.0 last-error -1.0]
-      (if (or (< (Math/abs (- j-squared last-error)) low-number)
-           (> i max-iter))
+      (if (or #_(< (Math/abs (- j-squared last-error)) low-number)
+           (>= i max-iter))
         {:theta Theta :mean-square-error j-squared :iterations i}
         (let [ans (make-prediction Theta X)
               diffs (cl/- ans Y)
@@ -52,11 +52,13 @@
 
 (defn mean-normalization [inputs]
   (let [avg (/ (reduce + inputs) (count inputs))
-        span (- (apply max inputs) (apply min inputs))]
+        span (- (apply max inputs) (apply min inputs))
+        normalize-fn #(/ (- % avg) span)]
     {:avg avg
      :span span
-     :values
-     (map #(/ (- % avg) span) inputs)}))
+     :normalize normalize-fn
+     :denormalize #(+ avg (* % span))
+     :values (map normalize-fn inputs)}))
 
 (defn denormalize [{:keys [avg span]} val]
   (+ avg (* val span)))
